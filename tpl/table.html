@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="col-md-5 despegar">
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="Buscar..." ng-model="query"/>
+			<span class="input-group-btn">
+		<button class="btn btn-default" type="button"><i class="fa fa-search"></i> Buscar</button>
+	</span>
+		</div>
+	</div>
+	<div class="col-md-7 text-right">
+	</div>
+</div>
+<div class="table-responsive">
+	<table class="table table-hover table-condensed">
+		<tr>
+			<th ng-repeat="label in labels track by $index">
+				{{ label }}
+			</th>
+		</tr>
+		<tr ng-repeat="model in fixedModel | filter:query track by $index " ng-dblclick="moveTo(model._id)">
+			<td ng-repeat="dLabel in data track by $index">
+				<i class="fa fa-2x pointer" ng-class="scIconClass" style="color:#d12a2f" ng-click="makeFn(model, dLabel)" ng-if="dLabel.tipo == 'link'"></i>
+				<i class="fa fa-2x pointer" ng-class="scIconClass" style="color:#d12a2f" ng-click="makeFn(model, dLabel)" ng-if="dLabel.tipo == 'function'"></i>
+				<span ng-if="!dLabel.tipo">
+					{{ showData(model, dLabel) }}
+				</span>
+				<span ng-if="dLabel.tipo == 'date'">
+					{{ showData(model, dLabel.data) | date:'MM/dd/yyyy' }}
+				</span>
+			</td>
+		</tr>
+	</table>
+</div>
+<div class="col-xs-12 text-right pag-result">
+	<label>{{ fixedModel.length }}</label> de
+	<label>{{ totalOfItems }}</label> Resultados
+</div>
+<div class="col-xs-12 text-center paginator">
+	<div class="btn-group">
+		<button type="button" class="btn btn-default" ng-click="previousPage()" ng-disabled="currentPage == 1"><i class="fa fa-angle-double-left"></i></button>
+		<button type="button" class="btn btn-default ng-binding disabled">{{ currentPage }} / {{ totalOfPages }}</button>
+		<button type="button" class="btn btn-default" ng-click="nextPage()" ng-disabled="currentPage == totalOfPages"><i class="fa fa-angle-double-right"></i></button>
+	</div>
+</div>
